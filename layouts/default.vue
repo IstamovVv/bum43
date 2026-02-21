@@ -7,6 +7,7 @@
     <TopBar />
     <HeaderSection />
     <slot/>
+    <FooterSection />
   </div>
 </template>
 

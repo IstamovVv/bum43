@@ -8,8 +8,6 @@
     <ContactsSection />
   </main>
 
-  <FooterSection />
-
   <CallbackModal />
   <CalculatorModal />
 </template>

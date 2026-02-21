@@ -24,26 +24,26 @@
       <BrandsGrid :brands="filteredBrands" />
 
       <!-- CTA -->
-      <div class="bg-gradient-to-r from-primary-600 to-primary-800 rounded-xl p-8 text-white text-center">
-        <h3 class="text-2xl font-bold mb-3">🤔 Не нашли что искали?</h3>
-        <p class="text-gray-200 mb-6 max-w-2xl mx-auto">
-          Наши специалисты помогут подобрать нужные материалы
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <UiButton variant="accent" size="lg" @click="isCallbackModalOpen = true">
-            📞 Заказать звонок
-          </UiButton>
-          <a
-              href="https://wa.me/78332756983"
-              target="_blank"
-              class="bg-white hover:bg-gray-100 text-primary-700 px-8 py-4 rounded-lg font-bold text-lg transition-colors shadow-lg flex items-center justify-center gap-2"
-          >
-            <span class="icon i-whatsapp w-5 h-5"></span>
-            Написать в WhatsApp
-          </a>
-        </div>
-      </div>
     </main>
+    <div class="bg-gradient-to-r from-primary-600 to-primary-800 p-8 text-white text-center">
+      <h3 class="text-2xl font-bold mb-3">🤔 Не нашли что искали?</h3>
+      <p class="text-gray-200 mb-6 max-w-2xl mx-auto">
+        Наши специалисты помогут подобрать нужные материалы
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <button @click="isCallbackModalOpen = true">
+          📞 Заказать звонок
+        </button>
+        <a
+            href="https://wa.me/78332756983"
+            target="_blank"
+            class="bg-white hover:bg-gray-100 text-primary-700 px-8 py-4 rounded-lg font-bold text-lg transition-colors shadow-lg flex items-center justify-center gap-2"
+        >
+          <span class="icon i-whatsapp w-5 h-5"></span>
+          Написать в WhatsApp
+        </a>
+      </div>
+    </div>
   </div>
 </template>
 
