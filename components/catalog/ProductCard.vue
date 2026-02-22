@@ -30,9 +30,9 @@
         </span>
       </div>
 
-      <!-- Кнопка "В избранное" (появляется при ховере) -->
+      <!-- Кнопка "В избранное" -->
       <button class="absolute top-2 right-2 p-2 bg-white/90 rounded-full shadow opacity-0 group-hover:opacity-100 transition-opacity hover:text-red-500">
-        <IconComponent name="heart" class="w-4 h-4" />
+        <Icon name="heroicons:heart" class="w-4 h-4" />
       </button>
     </div>
 
@@ -46,7 +46,13 @@
       <!-- Рейтинг -->
       <div class="flex items-center mb-3">
         <div class="flex text-yellow-400">
-          <IconComponent v-for="i in 5" :key="i" name="star" class="w-3 h-3" :class="i <= product.rating ? 'fill-current' : 'text-gray-300'" />
+          <Icon
+              v-for="i in 5"
+              :key="i"
+              name="heroicons:star"
+              class="w-3 h-3"
+              :class="i <= product.rating ? 'fill-current' : 'text-gray-300'"
+          />
         </div>
         <span class="text-xs text-gray-400 ml-1">({{ product.reviews }})</span>
       </div>
@@ -59,7 +65,7 @@
         </div>
 
         <button class="bg-primary-600 hover:bg-primary-700 text-white p-2 rounded-lg transition-colors flex items-center justify-center group/btn">
-          <IconComponent name="shoppingCart" class="w-5 h-5" />
+          <Icon name="heroicons:shopping-cart" class="w-5 h-5" />
           <span class="sr-only">В корзину</span>
         </button>
       </div>
@@ -68,8 +74,7 @@
 </template>
 
 <script setup lang="ts">
-withDefaults(defineProps<{
-  variant?: 'grid' | 'list',
+const props = withDefaults(defineProps<{
   product: {
     id: number
     name: string
@@ -83,6 +88,7 @@ withDefaults(defineProps<{
     reviews: number
     rating: number
   }
+  variant?: 'grid' | 'list'
 }>(), {
   variant: 'grid'
 })

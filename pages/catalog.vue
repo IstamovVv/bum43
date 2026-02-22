@@ -1,9 +1,9 @@
-<!-- pages/categories.vue -->
+<!-- pages/catalog.vue -->
 <template>
   <div class="min-h-screen bg-gray-50 py-8">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-      <!-- Хлебные крошки (для контекста) -->
+      <!-- Хлебные крошки -->
       <nav class="flex mb-6 text-sm text-gray-500">
         <NuxtLink to="/" class="hover:text-primary-600">Главная</NuxtLink>
         <span class="mx-2">/</span>
@@ -14,13 +14,12 @@
 
         <!-- SIDEBAR: Фильтры -->
         <aside class="w-full md:w-64 flex-shrink-0">
-          <!-- Кнопка фильтров для мобильных -->
           <button
               @click="mobileFiltersOpen = !mobileFiltersOpen"
               class="md:hidden w-full flex items-center justify-between p-3 bg-white border border-gray-200 rounded-lg mb-4 font-medium"
           >
             <span>Фильтры</span>
-            <IconComponent :name="mobileFiltersOpen ? 'chevronUp' : 'chevronDown'" class="w-5 h-5" />
+            <Icon :name="mobileFiltersOpen ? 'heroicons:chevron-up' : 'heroicons:chevron-down'" class="w-5 h-5" />
           </button>
 
           <div :class="['bg-white p-5 rounded-xl border border-gray-200', mobileFiltersOpen ? 'block' : 'hidden md:block']">
@@ -63,12 +62,11 @@
         <!-- MAIN: Товары -->
         <main class="flex-grow">
 
-          <!-- Toolbar: Сортировка и Вид -->
+          <!-- Toolbar -->
           <div class="bg-white p-4 rounded-xl border border-gray-200 mb-6 flex flex-col sm:flex-row justify-between items-center gap-4">
             <span class="text-sm text-gray-500">Найдено: <strong class="text-gray-900">{{ products.length }}</strong> товаров</span>
 
             <div class="flex items-center gap-4 w-full sm:w-auto">
-              <!-- Сортировка -->
               <select class="p-2 border border-gray-200 rounded-lg text-sm bg-transparent focus:ring-2 focus:ring-primary-500 outline-none">
                 <option>По популярности</option>
                 <option>Сначала дешевле</option>
@@ -81,26 +79,21 @@
                 <button
                     @click="viewMode = 'grid'"
                     :class="['p-2 rounded-md transition-all', viewMode === 'grid' ? 'bg-white shadow text-primary-600' : 'text-gray-400 hover:text-gray-600']"
-                    aria-label="Grid View"
                 >
-                  <IconComponent name="grid" class="w-5 h-5" />
+                  <Icon name="heroicons:squares-2x2" class="w-5 h-5" />
                 </button>
                 <button
                     @click="viewMode = 'list'"
                     :class="['p-2 rounded-md transition-all', viewMode === 'list' ? 'bg-white shadow text-primary-600' : 'text-gray-400 hover:text-gray-600']"
-                    aria-label="List View"
                 >
-                  <IconComponent name="list" class="w-5 h-5" />
+                  <Icon name="heroicons:bars-3" class="w-5 h-5" />
                 </button>
               </div>
             </div>
           </div>
 
           <!-- Сетка товаров -->
-          <div
-              class="grid gap-6"
-              :class="gridClasses"
-          >
+          <div class="grid gap-6" :class="gridClasses">
             <ProductCard
                 v-for="product in products"
                 :key="product.id"
@@ -112,12 +105,16 @@
           <!-- Пагинация -->
           <div class="mt-10 flex justify-center">
             <nav class="flex items-center gap-2">
-              <button class="p-2 border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50">←</button>
+              <button class="p-2 border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50">
+                <Icon name="heroicons:chevron-left" class="w-5 h-5" />
+              </button>
               <button class="w-10 h-10 bg-primary-600 text-white rounded-lg font-medium">1</button>
               <button class="w-10 h-10 border border-gray-200 rounded-lg hover:bg-gray-50">2</button>
               <button class="w-10 h-10 border border-gray-200 rounded-lg hover:bg-gray-50">3</button>
               <span class="text-gray-400">...</span>
-              <button class="p-2 border border-gray-200 rounded-lg hover:bg-gray-50">→</button>
+              <button class="p-2 border border-gray-200 rounded-lg hover:bg-gray-50">
+                <Icon name="heroicons:chevron-right" class="w-5 h-5" />
+              </button>
             </nav>
           </div>
 
@@ -134,7 +131,7 @@ import { ref, computed } from 'vue'
 const viewMode = ref<'grid' | 'list'>('grid')
 const mobileFiltersOpen = ref(false)
 
-// Данные (заглушка)
+// Данные
 const categories = ['Стеновые панели', 'Водостоки', 'Кровля', 'Фундамент', 'Утеплитель']
 
 const products = [
@@ -142,7 +139,7 @@ const products = [
     id: 1,
     name: 'Сэндвич-панели ПВХ откосы',
     desc: 'Длина 3 м, толщина 10 мм, белый цвет',
-    image: '/img/products/panel-1.jpg', // Замените на реальные пути
+    image: '/img/products/panel-1.jpg',
     discount: '-7%',
     badge: 'Хит',
     badgeClass: 'bg-primary-500 text-white',
@@ -197,7 +194,6 @@ const gridClasses = computed(() => {
   if (viewMode.value === 'list') {
     return 'grid-cols-1'
   }
-  // Адаптивная сетка как договаривались: Mobile 2, Tablet 3, Desktop 4
   return 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
 })
 </script>
