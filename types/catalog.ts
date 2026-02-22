@@ -1,25 +1,18 @@
 // types/categories.ts
 export interface Category {
     name: string
-    image: any
-}
-
-export interface Subcategory {
-    id: string | number
-    slug: string
-    title: string
-    itemCount: number
+    image: string
+    to?: string
+    count?: number  // Количество товаров в категории
 }
 
 export interface Brand {
-    id: string | number
-    slug: string
+    id: number
     title: string
+    slug: string
     country: string
-    countryFlag: string
-}
-
-export interface CatalogData {
-    categories: Category[]
-    brands: Brand[]
+    countryFlag?: string  // Опционально, если нет логотипа
+    logo?: string         // URL логотипа
+    productCount?: number // Количество товаров бренда
+    isPopular?: boolean   // Флаг популярности
 }
