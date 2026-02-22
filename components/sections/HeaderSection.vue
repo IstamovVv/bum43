@@ -12,7 +12,7 @@
         <nav class="hidden md:block">
           <ul class="flex gap-6">
             <li><NuxtLink to="/" class="text-gray-700 hover:text-primary-600 font-medium">Главная</NuxtLink></li>
-            <li><NuxtLink to="/catalog" class="text-gray-700 hover:text-primary-600 font-medium">Каталог</NuxtLink></li>
+            <li><NuxtLink to="/categories" class="text-gray-700 hover:text-primary-600 font-medium">Каталог</NuxtLink></li>
             <li><NuxtLink to="/brands" class="text-gray-700 hover:text-primary-600 font-medium">Бренды</NuxtLink></li>
             <li><NuxtLink to="/contacts" class="text-gray-700 hover:text-primary-600 font-medium">Контакты</NuxtLink></li>
           </ul>

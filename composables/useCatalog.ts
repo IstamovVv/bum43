@@ -4,27 +4,27 @@ export const useCatalog = () => {
     const categories = ref<Category[]>([
         {
             name: 'Сайдинг',
-            image: '/images/catalog/siding.png',
+            image: '/images/categories/siding.png',
         },
         {
             name: 'Террасная доска',
-            image: '/images/catalog/terrace.png',
+            image: '/images/categories/terrace.png',
         },
         {
             name: 'Подоконники',
-            image: '/images/catalog/windowsill.png',
+            image: '/images/categories/windowsill.png',
         },
         {
             name: 'Экраны декоративные',
-            image: '/images/catalog/screen.png',
+            image: '/images/categories/screen.png',
         },
         {
             name: 'Кровля',
-            image: '/images/catalog/roof.png',
+            image: '/images/categories/roof.png',
         },
         {
             name: 'Все для окон',
-            image: '/images/catalog/everything-for-windows.png',
+            image: '/images/categories/everything-for-windows.png',
         },
     ])
 

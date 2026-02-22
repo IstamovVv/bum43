@@ -1,4 +1,4 @@
-<!-- components/catalog/CatalogSubcategoryPopup.vue -->
+<!-- components/categories/CatalogSubcategoryPopup.vue -->
 <template>
   <div
       class="subcategory-popup"

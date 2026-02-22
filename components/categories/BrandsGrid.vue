@@ -1,4 +1,4 @@
-<!-- components/catalog/BrandsGrid.vue -->
+<!-- components/categories/BrandsGrid.vue -->
 <template>
   <section class="mb-16">
     <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">

@@ -1,4 +1,4 @@
-// types/catalog.ts
+// types/categories.ts
 export interface Category {
     name: string
     image: any
