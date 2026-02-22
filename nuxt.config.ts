@@ -11,7 +11,7 @@ export default defineNuxtConfig({
       },
   ],
 
-  modules: ['@nuxtjs/tailwindcss', '@nuxt/fonts', '@nuxtjs/seo', '@nuxt/image', 'nuxt-security'],
+  modules: ['@nuxtjs/tailwindcss', '@nuxt/fonts', '@nuxtjs/seo', '@nuxt/image', '@nuxt/icon', 'nuxt-security'],
     app: {
         head: {
             charset: 'utf-8',
