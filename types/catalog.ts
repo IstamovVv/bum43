@@ -1,14 +1,7 @@
 // types/catalog.ts
 export interface Category {
-    id: string | number
-    slug: string
-    title: string
-    description: string
-    itemCount: number
-    priceFrom?: string
-    icon: string
-    gradient: string
-    subcategories?: Subcategory[]
+    name: string
+    image: any
 }
 
 export interface Subcategory {

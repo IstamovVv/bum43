@@ -1,6 +1,6 @@
 <!-- pages/catalog/index.vue -->
 <template>
-  <div class="min-h-screen bg-gray-50">
+  <div class="min-h-screen">
     <section class="bg-gradient-to-r from-primary-700 to-primary-900 text-white p-8 mb-12">
       <div class="flex flex-col md:flex-row justify-between items-center gap-4 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div>

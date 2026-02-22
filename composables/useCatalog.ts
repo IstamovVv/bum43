@@ -1,5 +1,11 @@
 // composables/useCatalog.ts
 import type { Category, Brand } from '~/types/catalog'
+import SidingImage from '~/assets/images/catalog/siding.png'
+import TerraceImage from '~/assets/images/catalog/terrace.png'
+import WindowSillImage from '~/assets/images/catalog/windowsill.png'
+import ScreenImage from '~/assets/images/catalog/screen.png'
+import RoofImage from '~/assets/images/catalog/roof.png'
+import EveryThingForWindows from '~/assets/images/catalog/everything-for-windows.png'
 
 export const useCatalog = () => {
     const config = useRuntimeConfig()
@@ -7,132 +13,29 @@ export const useCatalog = () => {
     // Статические данные (можно заменить на API)
     const categories = ref<Category[]>([
         {
-            id: 'sayding',
-            slug: 'sayding',
-            title: 'Сайдинг',
-            description: 'Виниловый, металлический',
-            itemCount: 48,
-            priceFrom: '180 ₽',
-            icon: '🏠',
-            gradient: 'linear-gradient(135deg, #eef5ff 0%, #d9e6ff 100%)',
-            subcategories: [
-                { id: '1', slug: 'vinilovyy', title: 'Виниловый сайдинг', itemCount: 24 },
-                { id: '2', slug: 'metallicheskiy', title: 'Металлический сайдинг', itemCount: 16 },
-                { id: '3', slug: 'tsokolnyy', title: 'Цокольный сайдинг', itemCount: 8 }
-            ]
+            name: 'Сайдинг',
+            image: SidingImage,
         },
         {
-            id: 'fasad-paneli',
-            slug: 'fasadnyye-paneli',
-            title: 'Фасадные панели',
-            description: 'Цокольные, декоративные',
-            itemCount: 124,
-            priceFrom: '450 ₽',
-            icon: '🧱',
-            gradient: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)',
-            isHot: true,
-            subcategories: [
-                { id: '4', slug: 'yu-plast', title: 'Ю-Пласт', itemCount: 24 },
-                { id: '5', slug: 'fineber', title: 'FineBer', itemCount: 18 },
-                { id: '6', slug: 'alta-profil', title: 'Альта-Профиль 🇷🇺', itemCount: 32 },
-                { id: '7', slug: 'vox', title: 'VOX 🇵🇱', itemCount: 16 },
-                { id: '8', slug: 'docke', title: 'DOCKE 🇩🇪', itemCount: 14 },
-                { id: '9', slug: 'starke', title: 'Starke', itemCount: 10 }
-            ]
+            name: 'Террасная доска',
+            image: TerraceImage,
         },
         {
-            id: 'vodostok',
-            slug: 'vodostok',
-            title: 'Водосточные системы',
-            description: 'Желоба, трубы, крепления',
-            itemCount: 64,
-            priceFrom: '102 ₽',
-            icon: '💧',
-            gradient: 'linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%)',
-            subcategories: [
-                { id: '10', slug: 'zheloba', title: 'Желоба водосточные', itemCount: 28 },
-                { id: '11', slug: 'truby', title: 'Трубы водосточные', itemCount: 22 },
-                { id: '12', slug: 'krepleniya', title: 'Крепления', itemCount: 14 }
-            ]
+            name: 'Подоконники',
+            image: WindowSillImage,
         },
         {
-            id: 'terrasnaya',
-            slug: 'terrasnaya-doska',
-            title: 'Террасная доска',
-            description: 'ДПК, лиственница, сосна',
-            itemCount: 32,
-            priceFrom: '450 ₽',
-            icon: '🪵',
-            gradient: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)',
-            subcategories: [
-                { id: '13', slug: 'dpk', title: 'ДПК доска', itemCount: 18 },
-                { id: '14', slug: 'listvennica', title: 'Лиственница', itemCount: 10 },
-                { id: '15', slug: 'sosna', title: 'Сосна', itemCount: 4 }
-            ]
+            name: 'Экраны декоративные',
+            image: ScreenImage,
         },
         {
-            id: 'okna',
-            slug: 'okna',
-            title: 'Всё для окон',
-            description: 'Подоконники, отливы, крепёж',
-            itemCount: 156,
-            priceFrom: undefined,
-            icon: '🪟',
-            gradient: 'linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%)',
-            isHot: true,
-            subcategories: [
-                { id: '16', slug: 'podokonniki', title: 'Подоконники', itemCount: 86 },
-                { id: '17', slug: 'otlivy', title: 'Отливы оконные', itemCount: 28 },
-                { id: '18', slug: 'sendvich-paneli', title: 'Сэндвич-панели', itemCount: 22 },
-                { id: '19', slug: 'montazhnaya-pena', title: 'Монтажная пена', itemCount: 12 },
-                { id: '20', slug: 'krepezh', title: 'Крепёж', itemCount: 8 }
-            ]
+            name: 'Кровля',
+            image: RoofImage,
         },
         {
-            id: 'zabory',
-            slug: 'zabory',
-            title: 'Заборы',
-            description: 'Сетка-рабица, столбы, ворота',
-            itemCount: 42,
-            priceFrom: '850 ₽',
-            icon: '🚧',
-            gradient: 'linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%)',
-            subcategories: [
-                { id: '21', slug: 'setka-rabica', title: 'Сетка-рабица', itemCount: 18 },
-                { id: '22', slug: 'stolby', title: 'Столбы заборные', itemCount: 14 },
-                { id: '23', slug: 'vorota', title: 'Ворота и калитки', itemCount: 10 }
-            ]
+            name: 'Все для окон',
+            image: EveryThingForWindows,
         },
-        {
-            id: 'krovlya',
-            slug: 'krovlya',
-            title: 'Кровля',
-            description: 'Металлочерепица, профнастил',
-            itemCount: 98,
-            priceFrom: '350 ₽',
-            icon: '🏠',
-            gradient: 'linear-gradient(135deg, #fee2e2 0%, #fecaca 100%)',
-            subcategories: [
-                { id: '24', slug: 'metallocherepica', title: 'Металлочерепица', itemCount: 52 },
-                { id: '25', slug: 'profnastil', title: 'Профнастил', itemCount: 32 },
-                { id: '26', slug: 'dobory', title: 'Доборные элементы', itemCount: 14 }
-            ]
-        },
-        {
-            id: 'utepliteli',
-            slug: 'utepliteli',
-            title: 'Утеплители',
-            description: 'Минвата, пенопласт, ЭППС',
-            itemCount: 56,
-            priceFrom: '120 ₽',
-            icon: '🔥',
-            gradient: 'linear-gradient(135deg, #fed7aa 0%, #fdba74 100%)',
-            subcategories: [
-                { id: '27', slug: 'minvata', title: 'Минеральная вата', itemCount: 28 },
-                { id: '28', slug: 'penoplast', title: 'Пенопласт', itemCount: 18 },
-                { id: '29', slug: 'epps', title: 'Экструдированный ППС', itemCount: 10 }
-            ]
-        }
     ])
 
     const brands = ref<Brand[]>([

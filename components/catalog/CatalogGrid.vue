@@ -7,10 +7,11 @@
     </h2>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      <CatalogCard
+      <CatalogCardV2
           v-for="category in categories"
-          :key="category.id"
-          :category="category"
+          :key="category.name"
+          :name="category.name"
+          :image="category.image"
       />
     </div>
   </section>
