@@ -26,37 +26,30 @@
 
       <!-- Контейнер бейджей -->
       <div class="absolute top-3 left-3 flex flex-col gap-2 z-20">
-        <!-- Скидка (автоматический расчет, если не передан текст) -->
+
+        <!-- Скидка: Показываем если есть discount в данных ИЛИ можно рассчитать из oldPrice -->
         <span
-            v-if="product.discount || discountPercentage"
-            class="bg-red-500 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow-lg uppercase tracking-wide"
+            v-if="shouldShowDiscount"
+            class="bg-red-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow-lg flex items-baseline gap-0.5"
         >
-          {{ product.discount || `-${discountPercentage}%` }}
+          <span class="text-sm leading-none">−</span>
+          <span class="text-base leading-none tabular-nums">{{ discountValue }}%</span>
         </span>
 
-        <!-- Пользовательский бейдж (New, Hit и т.д.) -->
+        <!-- Пользовательский бейдж (New, Hit) -->
         <span
             v-if="product.badge"
-            class="px-3 py-1.5 rounded-lg text-xs font-bold shadow-md bg-blue-600 text-white"
-            :class="product.badgeClass"
+            class="px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-900 text-white"
         >
           {{ product.badge }}
-        </span>
-
-        <!-- Триггер дефицита (Scarcity) -->
-        <span
-            v-if="product.stock && product.stock < 5"
-            class="bg-orange-500 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow-md animate-pulse"
-        >
-          Осталось: {{ product.stock }} шт.
         </span>
       </div>
 
       <!-- Кнопка "В избранное" -->
       <button
           @click.prevent="toggleFavorite"
-          class="absolute top-3 right-3 p-2.5 bg-white/90 backdrop-blur-sm text-gray-400 hover:text-red-500 hover:bg-white rounded-full shadow-md transition-all duration-300 hover:scale-110 active:scale-95 z-20"
-          :class="{ 'text-red-500 bg-red-50': isFavorite }"
+          class="absolute top-3 right-3 w-9 h-9 flex items-center justify-center bg-white/90 backdrop-blur-sm text-gray-400 hover:text-red-600 hover:bg-white rounded-full shadow-md transition-all duration-300 hover:scale-110 active:scale-95 z-20 border border-transparent hover:border-red-100"
+          :class="{ 'text-red-600 bg-red-50 border-red-200': isFavorite }"
           aria-label="Добавить в избранное"
       >
         <Icon
@@ -65,7 +58,17 @@
         />
       </button>
 
-      <!-- Оверлей "Быстрый просмотр" (только Desktop) -->
+      <!-- Индикатор остатков -->
+      <div
+          v-if="product.stock && product.stock < 5"
+          class="absolute bottom-3 left-3 z-20"
+      >
+        <span class="text-[11px] font-medium text-gray-500 bg-white/90 px-2 py-1 rounded backdrop-blur-sm">
+          Осталось: {{ product.stock }} шт.
+        </span>
+      </div>
+
+      <!-- Оверлей "Быстрый просмотр" -->
       <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 hidden md:flex">
         <span class="bg-white text-gray-900 px-6 py-2 rounded-full font-bold text-sm shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
           Быстрый просмотр
@@ -73,12 +76,12 @@
       </div>
     </NuxtLink>
 
-    <!-- === КОНТЕНТ (Инфо + Цена + Кнопки) === -->
+    <!-- === КОНТЕНТ === -->
     <div
         class="flex flex-col flex-grow p-5"
         :class="variant === 'list' ? 'w-full md:w-2/3 justify-center border-l border-gray-100' : ''"
     >
-      <!-- Категория / Бренд -->
+      <!-- Категория -->
       <span v-if="product.category" class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">
         {{ product.category }}
       </span>
@@ -90,7 +93,7 @@
         </h3>
       </NuxtLink>
 
-      <!-- Рейтинг (Social Proof) -->
+      <!-- Рейтинг -->
       <div v-if="product.rating" class="flex items-center gap-1 mb-3">
         <div class="flex text-yellow-400">
           <Icon v-for="n in 5" :key="n" :name="n <= product.rating ? 'heroicons:star-solid' : 'heroicons:star'" class="w-4 h-4" />
@@ -98,7 +101,7 @@
         <span class="text-xs text-gray-500 ml-1">({{ product.reviewCount || 0 }})</span>
       </div>
 
-      <!-- Описание (адаптивная обрезка) -->
+      <!-- Описание -->
       <p
           class="text-sm text-gray-500 mb-4 line-clamp-2 flex-grow"
           :class="variant === 'grid' ? 'line-clamp-2' : 'line-clamp-3'"
@@ -113,9 +116,9 @@
             <span class="text-2xl font-extrabold text-gray-900">{{ formatPrice(product.price) }}</span>
             <span v-if="product.oldPrice" class="text-sm text-gray-400 line-through font-medium">{{ formatPrice(product.oldPrice) }}</span>
           </div>
-          <!-- Сообщение об экономии -->
-          <span v-if="product.oldPrice" class="text-xs text-green-600 font-medium mt-1">
-            Вы экономите {{ formatPrice(calculateSavings) }}
+          <!-- Экономия -->
+          <span v-if="product.oldPrice" class="text-xs text-gray-500 font-medium mt-1">
+            Экономия {{ formatPrice(calculateSavings) }}
           </span>
         </div>
       </div>
@@ -132,7 +135,7 @@
           <span>{{ isAdding ? 'Добавляем...' : 'В корзину' }}</span>
         </button>
 
-        <!-- Кнопка "Купить в 1 клик" (для повышения конверсии) -->
+        <!-- Кнопка "Купить в 1 клик" -->
         <button
             class="hidden md:flex items-center justify-center p-3 border border-gray-200 rounded-xl hover:border-primary-600 hover:text-primary-600 transition-colors"
             title="Купить в 1 клик"
@@ -157,7 +160,6 @@ const props = withDefaults(defineProps<{
     oldPrice?: number | string
     discount?: string
     badge?: string
-    badgeClass?: string
     category?: string
     rating?: number
     reviewCount?: number
@@ -168,49 +170,64 @@ const props = withDefaults(defineProps<{
   variant: 'grid'
 })
 
-// Локальное состояние
 const isFavorite = ref(false)
 const isAdding = ref(false)
 
-// Вычисляемые свойства для маркетинга
-const discountPercentage = computed(() => {
-  if (!props.product.oldPrice || !props.product.price) return null
-  const oldP = Number(props.product.oldPrice)
-  const newP = Number(props.product.price)
-  if (oldP === 0) return 0
-  return Math.round(((oldP - newP) / oldP) * 100)
+// === Вычисляемые свойства для скидки ===
+
+// Проверяем, нужно ли показывать бейдж скидки
+const shouldShowDiscount = computed(() => {
+  // Показываем если есть явная скидка в данных ИЛИ есть старая цена для расчёта
+  return !!(props.product.discount || (props.product.oldPrice && props.product.price))
+})
+
+// Возвращает числовое значение процента
+const discountValue = computed(() => {
+  // Если передана строка вроде "-15%" или "15%"
+  if (props.product.discount) {
+    const num = String(props.product.discount).replace(/[^0-9]/g, '')
+    return num ? num : '0'
+  }
+
+  // Если есть oldPrice и price — считаем процент автоматически
+  if (props.product.oldPrice && props.product.price) {
+    const oldP = Number(String(props.product.oldPrice).replace(/[^0-9.]/g, ''))
+    const newP = Number(String(props.product.price).replace(/[^0-9.]/g, ''))
+
+    if (oldP > 0 && newP > 0 && oldP > newP) {
+      return Math.round(((oldP - newP) / oldP) * 100)
+    }
+  }
+
+  return '0'
 })
 
 const calculateSavings = computed(() => {
   if (!props.product.oldPrice || !props.product.price) return 0
-  return Number(props.product.oldPrice) - Number(props.product.price)
+  const oldP = Number(String(props.product.oldPrice).replace(/[^0-9.]/g, ''))
+  const newP = Number(String(props.product.price).replace(/[^0-9.]/g, ''))
+  return oldP - newP
 })
 
-// Утилиты
+// Форматирование цены
 const formatPrice = (value: number | string) => {
   return new Intl.NumberFormat('ru-RU', {
     style: 'currency',
     currency: 'RUB',
     maximumFractionDigits: 0
-  }).format(Number(value))
+  }).format(Number(String(value).replace(/[^0-9.]/g, '')))
 }
 
-// Методы
 const toggleFavorite = () => {
   isFavorite.value = !isFavorite.value
-  // Здесь вызов API для добавления в избранное
+  // API call...
 }
 
 const addToCart = async () => {
   if (isAdding.value) return
   isAdding.value = true
-
-  // Имитация запроса к серверу
   await new Promise(resolve => setTimeout(resolve, 800))
-
-  // Логика добавления в корзину (Pinia/Vuex)
   console.log(`Product ${props.product.id} added to cart`)
-
   isAdding.value = false
 }
 </script>
