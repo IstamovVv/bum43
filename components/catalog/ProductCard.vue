@@ -68,7 +68,8 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
+withDefaults(defineProps<{
+  variant?: 'grid' | 'list',
   product: {
     id: number
     name: string
@@ -82,11 +83,7 @@ defineProps<{
     reviews: number
     rating: number
   }
-  variant?: 'grid' | 'list'
-}>()
-
-// По умолчанию режим сетки
-withDefaults(defineProps<{ variant?: 'grid' | 'list' }>(), {
+}>(), {
   variant: 'grid'
 })
 </script>

@@ -1,4 +1,4 @@
-<!-- components/categories/CatalogGrid.vue -->
+<!-- components/categories/CategoriesGrid.vue -->
 <template>
   <section class="mb-16">
     <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
@@ -7,11 +7,12 @@
     </h2>
 
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-      <CatalogCard
+      <CategoriesCard
           v-for="category in categories"
           :key="category.name"
           :name="category.name"
           :image="category.image"
+          to="/catalog"
       />
     </div>
   </section>

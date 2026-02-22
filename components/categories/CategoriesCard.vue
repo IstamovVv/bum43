@@ -1,9 +1,5 @@
 <template>
-  <component
-      :is="to ? 'NuxtLink' : 'div'"
-      :to="to"
-      class="catalog-card group flex flex-col gap-4 items-center p-4 rounded-xl transition-all duration-300 ease-out cursor-pointer hover:shadow-lg hover:-translate-y-1"
-  >
+  <NuxtLink :to="to" class="catalog-card group flex flex-col gap-4 items-center p-4 rounded-xl transition-all duration-300 ease-out cursor-pointer hover:shadow-lg hover:-translate-y-1">
     <div class="image-wrapper relative w-full aspect-square overflow-hidden rounded-lg bg-gray-100">
       <NuxtImg
           :src="image"
@@ -18,14 +14,16 @@
       />
     </div>
     <h3 class="font-normal text-center text-base sm:text-lg">{{ name }}</h3>
-  </component>
+  </NuxtLink>
 </template>
 
 <script setup lang="ts">
+import type { RouteLocationRaw } from "vue-router";
+
 defineProps<{
   name: string
   image: string
-  to?: string
+  to?: RouteLocationRaw
 }>()
 </script>
 
