@@ -6,8 +6,8 @@
       Категории товаров
     </h2>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      <CatalogCardV2
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+      <CatalogCard
           v-for="category in categories"
           :key="category.name"
           :name="category.name"

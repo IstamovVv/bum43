@@ -1,40 +1,30 @@
-// composables/useCatalog.ts
 import type { Category, Brand } from '~/types/catalog'
-import SidingImage from '~/assets/images/catalog/siding.png'
-import TerraceImage from '~/assets/images/catalog/terrace.png'
-import WindowSillImage from '~/assets/images/catalog/windowsill.png'
-import ScreenImage from '~/assets/images/catalog/screen.png'
-import RoofImage from '~/assets/images/catalog/roof.png'
-import EveryThingForWindows from '~/assets/images/catalog/everything-for-windows.png'
 
 export const useCatalog = () => {
-    const config = useRuntimeConfig()
-
-    // Статические данные (можно заменить на API)
     const categories = ref<Category[]>([
         {
             name: 'Сайдинг',
-            image: SidingImage,
+            image: '/images/catalog/siding.png',
         },
         {
             name: 'Террасная доска',
-            image: TerraceImage,
+            image: '/images/catalog/terrace.png',
         },
         {
             name: 'Подоконники',
-            image: WindowSillImage,
+            image: '/images/catalog/windowsill.png',
         },
         {
             name: 'Экраны декоративные',
-            image: ScreenImage,
+            image: '/images/catalog/screen.png',
         },
         {
             name: 'Кровля',
-            image: RoofImage,
+            image: '/images/catalog/roof.png',
         },
         {
             name: 'Все для окон',
-            image: EveryThingForWindows,
+            image: '/images/catalog/everything-for-windows.png',
         },
     ])
 
@@ -53,35 +43,8 @@ export const useCatalog = () => {
         { id: '12', slug: 'moller', title: 'MЁЛЛЕР', country: 'Германия', countryFlag: '🇩🇪' }
     ])
 
-    // Поиск по каталогу
-    const searchQuery = ref('')
-
-    const filteredCategories = computed(() => {
-        if (!searchQuery.value.trim()) return categories.value
-
-        const query = searchQuery.value.toLowerCase()
-        return categories.value.filter(cat =>
-            cat.title.toLowerCase().includes(query) ||
-            cat.description.toLowerCase().includes(query) ||
-            cat.subcategories?.some(sub => sub.title.toLowerCase().includes(query))
-        )
-    })
-
-    const filteredBrands = computed(() => {
-        if (!searchQuery.value.trim()) return brands.value
-
-        const query = searchQuery.value.toLowerCase()
-        return brands.value.filter(brand =>
-            brand.title.toLowerCase().includes(query) ||
-            brand.country.toLowerCase().includes(query)
-        )
-    })
-
     return {
         categories,
         brands,
-        searchQuery,
-        filteredCategories,
-        filteredBrands
     }
 }

@@ -1,4 +1,3 @@
-<!-- pages/catalog/index.vue -->
 <template>
   <div class="min-h-screen">
     <section class="bg-gradient-to-r from-primary-700 to-primary-900 text-white p-8 mb-12">
@@ -18,10 +17,10 @@
     </section>
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Catalog -->
-      <CatalogGrid :categories="filteredCategories" />
+      <CatalogGrid :categories="categories" />
 
       <!-- Brands -->
-      <BrandsGrid :brands="filteredBrands" />
+      <BrandsGrid :brands="brands" />
 
       <!-- CTA -->
     </main>
@@ -48,7 +47,7 @@
 </template>
 
 <script setup lang="ts">
-const { filteredCategories, filteredBrands } = useCatalog()
+const { categories, brands } = useCatalog()
 const isCallbackModalOpen = ref(false)
 
 useSeoMeta({
