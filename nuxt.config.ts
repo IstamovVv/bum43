@@ -22,6 +22,7 @@ export default defineNuxtConfig({
     'nuxt-easy-lightbox'
   ],
     app: {
+        baseURL: process.env.NUXT_APP_BASE_URL || '/',
         head: {
             charset: 'utf-8',
             viewport: 'width=device-width, initial-scale=1',
@@ -30,5 +31,11 @@ export default defineNuxtConfig({
                 { name: 'description', content: 'Строительные материалы в Кирове' }
             ]
         }
-    }
+    },
+    site: {
+        // Берём из env-переменной, если нет — дефолтное значение
+        url: process.env.NUXT_PUBLIC_SITE_URL || 'https://stroybum.ru',
+        name: 'СтройБум Киров',
+        description: 'Строительные материалы в Кирове'
+    },
 })

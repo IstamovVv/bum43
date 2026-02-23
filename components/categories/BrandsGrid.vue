@@ -8,7 +8,7 @@
         </h2>
         <p class="text-gray-500 mt-1">Работаем только с проверенными производителями</p>
       </div>
-      <NuxtLink to="/brands" class="hidden sm:inline-flex items-center gap-1 text-primary-600 hover:text-primary-700 font-medium text-sm">
+      <NuxtLink class="hidden sm:inline-flex items-center gap-1 text-primary-600 hover:text-primary-700 font-medium text-sm">
         Все бренды
         <Icon name="heroicons:arrow-right" class="w-4 h-4" />
       </NuxtLink>
@@ -18,7 +18,6 @@
       <NuxtLink
           v-for="brand in brands"
           :key="brand.id"
-          :to="`/brands/${brand.slug}`"
           class="group flex flex-col items-center p-4 bg-white border border-gray-200 rounded-xl hover:border-primary-300 hover:shadow-lg transition-all duration-300"
       >
         <!-- Логотип бренда (заглушка или изображение) -->
@@ -54,7 +53,7 @@
     </div>
 
     <div class="sm:hidden mt-6 text-center">
-      <NuxtLink to="/brands" class="inline-flex items-center gap-1 text-primary-600 hover:text-primary-700 font-medium text-sm">
+      <NuxtLink class="inline-flex items-center gap-1 text-primary-600 hover:text-primary-700 font-medium text-sm">
         Все бренды
         <Icon name="heroicons:arrow-right" class="w-4 h-4" />
       </NuxtLink>

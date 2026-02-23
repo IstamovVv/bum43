@@ -11,7 +11,7 @@
             <li><Icon name="heroicons:chevron-right" class="w-4 h-4 text-gray-300" /></li>
             <li><NuxtLink to="/categories" class="hover:text-primary-600 transition-colors">Каталог</NuxtLink></li>
             <li><Icon name="heroicons:chevron-right" class="w-4 h-4 text-gray-300" /></li>
-            <li><NuxtLink :to="`/categories/${categorySlug}`" class="hover:text-primary-600 transition-colors">{{ product.category }}</NuxtLink></li>
+            <li><NuxtLink class="hover:text-primary-600 transition-colors">{{ product.category }}</NuxtLink></li>
             <li><Icon name="heroicons:chevron-right" class="w-4 h-4 text-gray-300" /></li>
             <li class="text-gray-900 font-medium truncate max-w-[200px]">{{ product.name }}</li>
           </ol>
