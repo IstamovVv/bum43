@@ -22,21 +22,18 @@ jobs:
         with:
           fetch-depth: 0
 
+      # ✅ Правильная настройка Node + кэш pnpm
       - name: 🟢 Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'  # Кэшируем npm, pnpm поставим вручную
+          cache: 'pnpm'  # ← cache только внутри with:
 
       - name: 📦 Install pnpm globally
         run: npm install -g pnpm@9
 
       - name: 📦 Install dependencies
         run: pnpm install --frozen-lockfile
-        env:
-          # Кэш для pnpm
-          PNPM_HOME: /home/runner/setup-pnpm
-        cache: pnpm
 
       - name: 🔨 Generate static site
         run: pnpm run generate
