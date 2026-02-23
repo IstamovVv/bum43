@@ -24,13 +24,13 @@
           quality="85"
       />
 
-      <!-- Контейнер бейджей -->
-      <div class="absolute top-3 left-3 flex flex-col gap-2 z-20">
+      <!-- Контейнер бейджей (верхний левый угол) -->
+      <div class="absolute top-3 left-3 flex flex-col gap-2 items-start z-20">
 
-        <!-- Скидка: Показываем если есть discount в данных ИЛИ можно рассчитать из oldPrice -->
+        <!-- Скидка -->
         <span
             v-if="shouldShowDiscount"
-            class="bg-red-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow-lg flex items-baseline gap-0.5"
+            class="bg-red-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow-lg flex items-baseline gap-0.5 w-fit"
         >
           <span class="text-sm leading-none">−</span>
           <span class="text-base leading-none tabular-nums">{{ discountValue }}%</span>
@@ -39,9 +39,17 @@
         <!-- Пользовательский бейдж (New, Hit) -->
         <span
             v-if="product.badge"
-            class="px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-900 text-white"
+            class="px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-900 text-white w-fit"
         >
           {{ product.badge }}
+        </span>
+
+        <!-- Индикатор остатков -->
+        <span
+            v-if="product.stock && product.stock < 5"
+            class="px-2.5 py-1 bg-white/90 backdrop-blur-sm text-gray-600 rounded-md text-[11px] font-medium border border-gray-100 w-fit"
+        >
+          Осталось: {{ product.stock }} шт.
         </span>
       </div>
 
@@ -58,22 +66,21 @@
         />
       </button>
 
-      <!-- Индикатор остатков -->
-      <div
-          v-if="product.stock && product.stock < 5"
-          class="absolute bottom-3 left-3 z-20"
+      <!-- Кнопка "Быстрый просмотр" (широкая плашка снизу, без затемнения) -->
+      <button
+          @click.prevent="handleQuickView"
+          class="absolute bottom-3 left-3 right-3 z-20
+                 px-4 py-2.5 bg-white/80 backdrop-blur-sm text-gray-700
+                 text-sm font-semibold rounded-lg shadow-md
+                 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0
+                 transition-all duration-300 ease-out
+                 hover:bg-white/95 hover:text-primary-600
+                 hidden md:flex items-center justify-center gap-2 whitespace-nowrap overflow-hidden"
+          aria-label="Быстрый просмотр товара"
       >
-        <span class="text-[11px] font-medium text-gray-500 bg-white/90 px-2 py-1 rounded backdrop-blur-sm">
-          Осталось: {{ product.stock }} шт.
-        </span>
-      </div>
-
-      <!-- Оверлей "Быстрый просмотр" -->
-      <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 hidden md:flex">
-        <span class="bg-white text-gray-900 px-6 py-2 rounded-full font-bold text-sm shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-          Быстрый просмотр
-        </span>
-      </div>
+        <Icon name="heroicons:eye" class="w-4 h-4 flex-shrink-0" />
+        <span class="truncate">Быстрый просмотр</span>
+      </button>
     </NuxtLink>
 
     <!-- === КОНТЕНТ === -->
@@ -170,35 +177,33 @@ const props = withDefaults(defineProps<{
   variant: 'grid'
 })
 
+const emit = defineEmits<{
+  (e: 'quick-view', productId: number): void
+  (e: 'add-to-cart', productId: number): void
+  (e: 'toggle-favorite', productId: number): void
+}>()
+
 const isFavorite = ref(false)
 const isAdding = ref(false)
 
 // === Вычисляемые свойства для скидки ===
 
-// Проверяем, нужно ли показывать бейдж скидки
 const shouldShowDiscount = computed(() => {
-  // Показываем если есть явная скидка в данных ИЛИ есть старая цена для расчёта
   return !!(props.product.discount || (props.product.oldPrice && props.product.price))
 })
 
-// Возвращает числовое значение процента
 const discountValue = computed(() => {
-  // Если передана строка вроде "-15%" или "15%"
   if (props.product.discount) {
     const num = String(props.product.discount).replace(/[^0-9]/g, '')
     return num ? num : '0'
   }
-
-  // Если есть oldPrice и price — считаем процент автоматически
   if (props.product.oldPrice && props.product.price) {
     const oldP = Number(String(props.product.oldPrice).replace(/[^0-9.]/g, ''))
     const newP = Number(String(props.product.price).replace(/[^0-9.]/g, ''))
-
     if (oldP > 0 && newP > 0 && oldP > newP) {
       return Math.round(((oldP - newP) / oldP) * 100)
     }
   }
-
   return '0'
 })
 
@@ -209,7 +214,6 @@ const calculateSavings = computed(() => {
   return oldP - newP
 })
 
-// Форматирование цены
 const formatPrice = (value: number | string) => {
   return new Intl.NumberFormat('ru-RU', {
     style: 'currency',
@@ -218,16 +222,24 @@ const formatPrice = (value: number | string) => {
   }).format(Number(String(value).replace(/[^0-9.]/g, '')))
 }
 
+// === Обработчики ===
+
 const toggleFavorite = () => {
   isFavorite.value = !isFavorite.value
-  // API call...
+  emit('toggle-favorite', props.product.id)
+}
+
+const handleQuickView = () => {
+  emit('quick-view', props.product.id)
 }
 
 const addToCart = async () => {
   if (isAdding.value) return
   isAdding.value = true
+  emit('add-to-cart', props.product.id)
+
+  // Имитация запроса
   await new Promise(resolve => setTimeout(resolve, 800))
-  console.log(`Product ${props.product.id} added to cart`)
   isAdding.value = false
 }
 </script>

@@ -11,7 +11,15 @@ export default defineNuxtConfig({
       },
   ],
 
-  modules: ['@nuxtjs/tailwindcss', '@nuxt/fonts', '@nuxtjs/seo', '@nuxt/image', 'nuxt-icon', 'nuxt-security'],
+  modules: [
+    '@nuxtjs/tailwindcss',
+    '@nuxt/fonts',
+    '@nuxtjs/seo',
+    '@nuxt/image',
+    'nuxt-icon',
+    'nuxt-security',
+    'vue3-carousel-nuxt'
+  ],
     app: {
         head: {
             charset: 'utf-8',
