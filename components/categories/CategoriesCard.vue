@@ -37,8 +37,9 @@
       {{ name }}
     </h3>
 
-    <!-- Подсказка при наведении (desktop) -->
-    <span class="hidden group-hover:block mt-2 text-xs text-gray-400 text-center transition-opacity">
+    <!-- Подсказка при наведении (FIX: без CLS) -->
+    <!-- Всегда в потоке, но невидима до hover -->
+    <span class="mt-2 text-xs text-gray-400 text-center transition-opacity duration-200 opacity-0 group-hover:opacity-100 visibility-hidden group-hover:visibility-visible h-4 flex items-center justify-center">
       Перейти в раздел →
     </span>
   </NuxtLink>
