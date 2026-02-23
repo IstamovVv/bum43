@@ -1,0 +1,15 @@
+{
+  "id": 999,
+  "name": "Тестовый товар",
+  "desc": "Удалите этот товар после настройки",
+  "price": 100,
+  "oldPrice": 150,
+  "category": "Тест",
+  "image": "/images/cms/test.jpg",
+  "isPopular": false,
+  "isNew": false,
+  "stock": 10,
+  "rating": 5.0,
+  "reviewCount": 0,
+  "createdAt": "2025-01-01"
+}
