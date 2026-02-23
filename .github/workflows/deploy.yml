@@ -41,6 +41,7 @@ jobs:
         run: pnpm run generate  # ← pnpm вместо npm
         env:
           NUXT_PUBLIC_SITE_URL: ${{ secrets.NUXT_PUBLIC_SITE_URL }}
+          NITRO_PRESET: static
 
       - name: 📤 Deploy to Yandex Object Storage
         uses: shallwefootball/s3-upload-action@master
