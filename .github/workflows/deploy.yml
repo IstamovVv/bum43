@@ -26,13 +26,19 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
+          cache: 'pnpm'  # ← Изменено с 'npm' на 'pnpm'
+
+      - name: 📦 Install pnpm
+        uses: pnpm/action-setup@v4  # ← Добавлена установка pnpm
+        with:
+          version: 9
+          run_install: false
 
       - name: 📦 Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile  # ← pnpm вместо npm ci
 
       - name: 🔨 Generate static site
-        run: npm run generate
+        run: pnpm run generate  # ← pnpm вместо npm
         env:
           NUXT_PUBLIC_SITE_URL: ${{ secrets.NUXT_PUBLIC_SITE_URL }}
 
