@@ -1,4 +1,4 @@
-name: 🚀 Deploy SSG
+name: 🚀 Deploy to GitHub Pages
 
 on:
   push:
@@ -6,60 +6,47 @@ on:
     paths:
       - 'data/**'
       - 'public/admin/**'
+      - 'pages/**'
+      - 'components/**'
+      - 'nuxt.config.ts'
   workflow_dispatch:
 
-concurrency:
-  group: deploy-${{ github.ref }}
-  cancel-in-progress: true
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-
     steps:
       - name: 📥 Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      # ✅ Просто ставим Node.js, без кэша pnpm
-      - name: 🟢 Setup Node.js
+      - name: 🟢 Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      # ✅ Сначала устанавливаем pnpm
-      - name: 📦 Install pnpm globally
+      - name: 📦 Install pnpm
         run: npm install -g pnpm@9
 
-      # ✅ Отдельно кэшируем зависимости pnpm
-      - name: 📦 Cache pnpm dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
-
-      # ✅ Устанавливаем зависимости
       - name: 📦 Install dependencies
         run: pnpm install --frozen-lockfile
 
       - name: 🔨 Generate static site
         run: pnpm run generate
         env:
-          NUXT_PUBLIC_SITE_URL: ${{ secrets.NUXT_PUBLIC_SITE_URL }}
+          NUXT_PUBLIC_SITE_URL: https://istamovvv.github.io/bum43
 
-      - name: 📤 Deploy to Yandex Object Storage
-        uses: shallwefootball/s3-upload-action@master
+      - name: 📤 Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: 📤 Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          aws_key_id: ${{ secrets.YC_ACCESS_KEY }}
-          aws_secret_access_key: ${{ secrets.YC_SECRET_KEY }}
-          aws_bucket: ${{ secrets.YC_BUCKET_NAME }}
-          aws_region: ru-central1
-          source_dir: '.output/public'
-          destination_dir: '/'
-          delete_removed_files: true
+          path: ./.output/public  # ← Самое важное: путь к собранным файлам!
 
-      - name: ✅ Deploy complete
-        run: echo "Сайт успешно обновлён!"
+      - name: 🚀 Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

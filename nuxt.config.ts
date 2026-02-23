@@ -22,7 +22,7 @@ export default defineNuxtConfig({
     'nuxt-easy-lightbox'
   ],
     app: {
-        baseURL: process.env.NUXT_APP_BASE_URL || '/',
+        baseURL: '/bum43/',
         head: {
             charset: 'utf-8',
             viewport: 'width=device-width, initial-scale=1',
@@ -32,10 +32,30 @@ export default defineNuxtConfig({
             ]
         }
     },
+    nitro: {
+        prerender: {
+            crawlLinks: true,
+            failOnError: false, // Не прерывать сборку из-за 404
+            // Исключить админку из пререндеринга (она статическая)
+            ignore: ['/admin', '/bum43/admin'],
+            // Явно указать, какие маршруты генерировать (опционально)
+            routes: ['/', '/catalog', '/categories'],
+        },
+        // Важно для статического хостинга
+        static: true,
+        // Для GitHub Pages:
+        publicAssets: [
+            {
+                dir: 'public',
+                maxAge: 3600,
+            },
+        ],
+    },
     site: {
         // Берём из env-переменной, если нет — дефолтное значение
         url: process.env.NUXT_PUBLIC_SITE_URL || 'https://stroybum.ru',
         name: 'СтройБум Киров',
-        description: 'Строительные материалы в Кирове'
+        description: 'Строительные материалы в Кирове',
+        trailingSlash: false, // ← Важно: убирать слэши
     },
 })
