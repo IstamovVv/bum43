@@ -18,7 +18,8 @@ export default defineNuxtConfig({
     '@nuxt/image',
     'nuxt-icon',
     'nuxt-security',
-    'vue3-carousel-nuxt'
+    'vue3-carousel-nuxt',
+    'nuxt-easy-lightbox'
   ],
     app: {
         head: {

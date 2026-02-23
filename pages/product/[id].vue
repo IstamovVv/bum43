@@ -24,32 +24,43 @@
       <!-- Верхняя часть: Галерея + Инфо -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-12">
 
-        <!-- ГАЛЕРЕЯ ИЗОБРАЖЕНИЙ (исправлено для vue3-carousel-nuxt) -->
+        <!-- ГАЛЕРЕЯ ИЗОБРАЖЕНИЙ -->
         <div class="flex flex-col gap-4">
-          <!-- Основное изображение -->
-          <div class="relative aspect-square bg-gray-100 rounded-2xl overflow-hidden border border-gray-200">
+
+          <!-- Основное изображение (КЛИКАБЕЛЬНОЕ) -->
+          <div
+              class="relative aspect-square bg-gray-100 rounded-2xl overflow-hidden border border-gray-200 cursor-zoom-in group"
+              @click="openLightbox"
+          >
             <NuxtImg
                 :src="selectedImage"
                 :alt="product.name"
                 width="800"
                 height="800"
-                class="w-full h-full object-cover"
+                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                 format="webp"
                 quality="90"
             />
 
+            <!-- Иконка лупы при наведении (FIX: идеальный круг) -->
+            <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+              <div class="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center">
+                <Icon name="heroicons:magnifying-glass-plus" class="w-6 h-6 text-gray-700" />
+              </div>
+            </div>
+
             <!-- Бейджи на фото -->
             <div class="absolute top-4 left-4 flex flex-col gap-2 z-10">
-      <span v-if="discountPercentage > 0" class="bg-red-700 text-white px-3 py-1.5 rounded-lg text-sm font-bold shadow-lg">
-        −{{ discountPercentage }}%
-      </span>
-              <span v-if="product.isPopular" class="bg-gray-900 text-white px-3 py-1.5 rounded-lg text-sm font-bold">
-        Хит
-      </span>
+              <span v-if="discountPercentage > 0" class="bg-red-700 text-white px-3 py-1.5 rounded-lg text-sm font-bold shadow-lg">
+                −{{ discountPercentage }}%
+              </span>
+                        <span v-if="product.isPopular" class="bg-gray-900 text-white px-3 py-1.5 rounded-lg text-sm font-bold">
+                Хит
+              </span>
             </div>
           </div>
 
-          <!-- Миниатюры (карусель) - ОБЕРНУТО В ClientOnly -->
+          <!-- Миниатюры (карусель) -->
           <ClientOnly>
             <Carousel
                 v-if="galleryImages.length > 1"
@@ -75,13 +86,11 @@
                   />
                 </button>
               </Slide>
-
               <template #addons>
                 <Navigation />
               </template>
             </Carousel>
 
-            <!-- Фолбэк для одного изображения -->
             <div v-else class="flex gap-2">
               <div class="w-20 h-20 rounded-xl overflow-hidden border-2 border-primary-600 ring-2 ring-primary-100">
                 <NuxtImg
@@ -96,14 +105,12 @@
               </div>
             </div>
 
-            <!-- Placeholder пока карусель грузится -->
             <template #fallback>
               <div class="flex gap-2 overflow-x-auto pb-2">
                 <div
                     v-for="(image, index) in galleryImages"
                     :key="index"
                     class="w-20 h-20 flex-shrink-0 rounded-xl overflow-hidden border-2 border-gray-200"
-                    :class="selectedImage === image ? 'border-primary-600' : ''"
                 >
                   <NuxtImg
                       :src="image"
@@ -155,12 +162,12 @@
             </span>
           </div>
 
-          <!-- Описание (из каталога) -->
+          <!-- Описание -->
           <p class="text-gray-600 mb-6 leading-relaxed">
             {{ product.desc }}
           </p>
 
-          <!-- Ключевые характеристики (генерируются из desc) -->
+          <!-- Характеристики -->
           <div class="grid grid-cols-2 gap-3 mb-6">
             <div class="flex justify-between py-2 border-b border-gray-100">
               <span class="text-sm text-gray-500">Наличие</span>
@@ -182,7 +189,7 @@
 
           <!-- Количество + Кнопки -->
           <div class="flex flex-col sm:flex-row gap-3 mb-6">
-            <!-- Счётчик количества (FIX: единый стиль) -->
+            <!-- Счётчик -->
             <div class="flex items-center border border-gray-200 rounded-xl overflow-hidden bg-white">
               <button
                   @click="decrementQuantity"
@@ -230,7 +237,7 @@
             </button>
           </div>
 
-          <!-- Доставка и гарантия (иконки) -->
+          <!-- Доставка и гарантия -->
           <div class="grid grid-cols-2 gap-4 p-4 bg-gray-50 rounded-xl">
             <div class="flex items-start gap-2">
               <Icon name="heroicons:truck" class="w-5 h-5 text-primary-600 flex-shrink-0 mt-0.5" />
@@ -268,7 +275,6 @@
         </div>
 
         <div class="p-6 md:p-8">
-          <!-- Описание -->
           <div v-if="activeTab === 'description'" class="prose prose-gray max-w-none">
             <p class="text-gray-600 leading-relaxed">{{ product.desc }}</p>
             <p class="text-gray-600 leading-relaxed mt-4">
@@ -276,7 +282,6 @@
             </p>
           </div>
 
-          <!-- Характеристики -->
           <div v-if="activeTab === 'specs'" class="max-w-2xl">
             <dl class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div class="flex justify-between py-3 border-b border-gray-100">
@@ -298,7 +303,6 @@
             </dl>
           </div>
 
-          <!-- Отзывы -->
           <div v-if="activeTab === 'reviews'" class="text-center py-8">
             <Icon name="heroicons:chat-bubble-left-right" class="w-12 h-12 text-gray-300 mx-auto mb-4" />
             <p class="text-gray-500 mb-4">Отзывов пока нет — будьте первым!</p>
@@ -321,19 +325,34 @@
       </section>
 
     </main>
+
+    <!-- === LIGHTBOX (увеличение изображения) === -->
+    <ClientOnly>
+      <VueEasyLightbox
+          v-if="lightboxVisible"
+          :visible="lightboxVisible"
+          :imgs="galleryImages"
+          :index="lightboxIndex"
+          :scrollDisabled="false"
+          @hide="lightboxVisible = false"
+          @move="handleLightboxMove"
+      />
+    </ClientOnly>
+
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+// vue-easy-lightbox импортируется динамически или через ClientOnly
 
-// === Тип товара (совместим с каталогом) ===
+// === Тип товара ===
 interface Product {
   id: number
   name: string
   desc: string
   image: string
-  images?: string[]  // Доп. изображения для галереи
+  images?: string[]
   price: number
   oldPrice?: number
   category: string
@@ -346,7 +365,7 @@ interface Product {
   createdAt: string
 }
 
-// === Текущий товар (mock — заменить на useFetch) ===
+// === Текущий товар ===
 const product = ref<Product>({
   id: 1,
   name: 'Сэндвич-панели ПВХ откосы',
@@ -369,7 +388,7 @@ const product = ref<Product>({
   createdAt: '2024-01-15'
 })
 
-// === Связанные товары (mock) ===
+// === Связанные товары ===
 const relatedProducts = ref<Product[]>([
   {
     id: 2,
@@ -440,6 +459,10 @@ const isFavorite = ref(false)
 const activeTab = ref('description')
 const categorySlug = computed(() => product.value.categorySlug || product.value.category.toLowerCase().replace(/\s+/g, '-'))
 
+// === Lightbox состояние ===
+const lightboxVisible = ref(false)
+const lightboxIndex = ref(0)
+
 const tabs = [
   { id: 'description', label: 'Описание' },
   { id: 'specs', label: 'Характеристики' },
@@ -484,14 +507,24 @@ const toggleFavorite = () => {
 const addToCart = async () => {
   if (isAdding.value || product.value.stock === 0) return
   isAdding.value = true
-
-  // Имитация запроса
   await new Promise(resolve => setTimeout(resolve, 800))
-
   console.log(`Added ${quantity.value} x ${product.value.name} to cart`)
-
   isAdding.value = false
-  // Здесь можно показать тост-уведомление
+}
+
+// === Lightbox методы ===
+const openLightbox = () => {
+  // Находим индекс текущего изображения в галерее
+  lightboxIndex.value = galleryImages.value.indexOf(selectedImage.value)
+  if (lightboxIndex.value === -1) lightboxIndex.value = 0
+  lightboxVisible.value = true
+}
+
+const handleLightboxMove = (val: number) => {
+  // При переключении в лайтбоксе — обновляем selectedImage
+  if (galleryImages.value[val]) {
+    selectedImage.value = galleryImages.value[val]
+  }
 }
 
 // === SEO ===
@@ -531,7 +564,7 @@ useSeoMeta({
   border-color: #d1d5db;
 }
 
-/* Адаптив для табов */
+/* Адаптив */
 @media (max-width: 640px) {
   .carousel-mini {
     max-width: 100%;
