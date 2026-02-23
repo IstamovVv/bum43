@@ -22,26 +22,26 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: 🟢 Setup Node
+      - name: 🟢 Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'pnpm'  # ← Изменено с 'npm' на 'pnpm'
+          cache: 'npm'  # Кэшируем npm, pnpm поставим вручную
 
-      - name: 📦 Install pnpm
-        uses: pnpm/action-setup@v4  # ← Добавлена установка pnpm
-        with:
-          version: 9
-          run_install: false
+      - name: 📦 Install pnpm globally
+        run: npm install -g pnpm@9
 
       - name: 📦 Install dependencies
-        run: pnpm install --frozen-lockfile  # ← pnpm вместо npm ci
+        run: pnpm install --frozen-lockfile
+        env:
+          # Кэш для pnpm
+          PNPM_HOME: /home/runner/setup-pnpm
+        cache: pnpm
 
       - name: 🔨 Generate static site
-        run: pnpm run generate  # ← pnpm вместо npm
+        run: pnpm run generate
         env:
           NUXT_PUBLIC_SITE_URL: ${{ secrets.NUXT_PUBLIC_SITE_URL }}
-          NITRO_PRESET: static
 
       - name: 📤 Deploy to Yandex Object Storage
         uses: shallwefootball/s3-upload-action@master
