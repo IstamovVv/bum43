@@ -4,6 +4,8 @@ backend:
   branch: main
   client_id: Ov23liDhelZ1lDAWzp2Q
 
+base_url: https://istamovvv.github.io/bum43/
+
 # Папка для загружаемых изображений
 media_folder: "public/images/uploads"
 # Путь к картинкам на сайте (с учётом baseURL)

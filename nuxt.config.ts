@@ -1,5 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+    ssr: false,
+    nitro: {
+      preset: 'static',
+    },
+    app: {
+        baseURL: '/bum43/'
+    },
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
     css: ['~/assets/css/main.css'],
