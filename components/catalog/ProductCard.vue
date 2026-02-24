@@ -55,10 +55,10 @@
 
       <!-- Кнопка "В избранное" -->
       <button
-          @click.prevent="toggleFavorite"
           class="absolute top-3 right-3 w-9 h-9 flex items-center justify-center bg-white/90 backdrop-blur-sm text-gray-400 hover:text-red-600 hover:bg-white rounded-full shadow-md transition-all duration-300 hover:scale-110 active:scale-95 z-20 border border-transparent hover:border-red-100"
           :class="{ 'text-red-600 bg-red-50 border-red-200': isFavorite }"
           aria-label="Добавить в избранное"
+          @click.prevent="toggleFavorite"
       >
         <Icon
             :name="isFavorite ? 'heroicons:heart-solid' : 'heroicons:heart'"
@@ -68,7 +68,6 @@
 
       <!-- Кнопка "Быстрый просмотр" (широкая плашка снизу, без затемнения) -->
       <button
-          @click.prevent="handleQuickView"
           class="absolute bottom-3 left-3 right-3 z-20
                  px-4 py-2.5 bg-white/80 backdrop-blur-sm text-gray-700
                  text-sm font-semibold rounded-lg shadow-md
@@ -77,6 +76,7 @@
                  hover:bg-white/95 hover:text-primary-600
                  hidden md:flex items-center justify-center gap-2 whitespace-nowrap overflow-hidden"
           aria-label="Быстрый просмотр товара"
+          @click.prevent="handleQuickView"
       >
         <Icon name="heroicons:eye" class="w-4 h-4 flex-shrink-0" />
         <span class="truncate">Быстрый просмотр</span>
@@ -133,9 +133,9 @@
       <!-- Кнопки действий -->
       <div class="flex gap-2 mt-2">
         <button
-            @click="addToCart"
             :disabled="isAdding"
             class="flex-1 bg-primary-600 hover:bg-primary-700 disabled:bg-gray-400 text-white py-3 rounded-xl font-bold transition-all duration-300 flex items-center justify-center gap-2 shadow-md hover:shadow-lg active:scale-[0.98]"
+            @click="addToCart"
         >
           <Icon v-if="!isAdding" name="heroicons:shopping-cart" class="w-5 h-5" />
           <Icon v-else name="heroicons:arrow-path" class="w-5 h-5 animate-spin" />

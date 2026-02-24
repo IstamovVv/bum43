@@ -28,7 +28,7 @@
               :alt="brand.title"
               class="w-full h-full object-contain p-2"
               loading="lazy"
-          />
+          >
           <span v-else class="text-2xl">{{ brand.countryFlag }}</span>
         </div>
 

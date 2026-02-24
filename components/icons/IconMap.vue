@@ -1,5 +1,5 @@
 <template>
-  <span class="icon" :class="props.class" :style="iconStyle"></span>
+  <span class="icon" :class="props.class" :style="iconStyle"/>
 </template>
 
 <script setup>

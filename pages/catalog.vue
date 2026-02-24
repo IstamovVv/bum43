@@ -24,9 +24,9 @@
         <aside class="w-full md:w-64 flex-shrink-0">
           <!-- Мобильная кнопка фильтров -->
           <button
-              @click="mobileFiltersOpen = !mobileFiltersOpen"
               class="md:hidden w-full flex items-center justify-between p-3 bg-white border border-gray-200 rounded-lg mb-4 font-medium shadow-sm"
               aria-expanded="mobileFiltersOpen"
+              @click="mobileFiltersOpen = !mobileFiltersOpen"
           >
             <span>Фильтры</span>
             <Icon :name="mobileFiltersOpen ? 'heroicons:chevron-up' : 'heroicons:chevron-down'" class="w-5 h-5" />
@@ -37,8 +37,8 @@
             <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-100">
               <h3 class="font-bold text-lg">Фильтры</h3>
               <button
-                  @click="resetFilters"
                   class="text-xs text-primary-600 hover:text-primary-700 font-medium hover:underline"
+                  @click="resetFilters"
               >
                 Сбросить
               </button>
@@ -50,11 +50,11 @@
               <div class="space-y-2 max-h-48 overflow-y-auto pr-2">
                 <label v-for="cat in categories" :key="cat" class="flex items-center gap-3 cursor-pointer group">
                   <input
+                      v-model="filters.categories"
                       type="checkbox"
                       :value="cat"
-                      v-model="filters.categories"
                       class="rounded text-primary-600 focus:ring-primary-500 w-4 h-4 cursor-pointer"
-                  />
+                  >
                   <span class="text-sm text-gray-600 group-hover:text-gray-900 transition-colors">{{ cat }}</span>
                   <span class="ml-auto text-xs text-gray-400">{{ getProductCountByCategory(cat) }}</span>
                 </label>
@@ -67,22 +67,22 @@
               <div class="space-y-3">
                 <div class="flex items-center gap-2">
                   <input
-                      type="number"
                       v-model.number="filters.priceMin"
+                      type="number"
                       placeholder="От"
                       class="w-full p-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-shadow"
-                  />
+                  >
                   <span class="text-gray-300">—</span>
                   <input
-                      type="number"
                       v-model.number="filters.priceMax"
+                      type="number"
                       placeholder="До"
                       class="w-full p-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-shadow"
-                  />
+                  >
                 </div>
                 <!-- Визуальный индикатор диапазона (опционально) -->
                 <div class="h-1 bg-gray-100 rounded-full overflow-hidden">
-                  <div class="h-full bg-primary-500 rounded-full" style="width: 60%"></div>
+                  <div class="h-full bg-primary-500 rounded-full" style="width: 60%"/>
                 </div>
               </div>
             </div>
@@ -92,10 +92,10 @@
               <h4 class="font-medium mb-3 text-sm text-gray-700">Наличие</h4>
               <label class="flex items-center gap-3 cursor-pointer">
                 <input
-                    type="checkbox"
                     v-model="filters.inStockOnly"
+                    type="checkbox"
                     class="rounded text-primary-600 focus:ring-primary-500 w-4 h-4"
-                />
+                >
                 <span class="text-sm text-gray-600">Только в наличии</span>
               </label>
             </div>
@@ -106,12 +106,12 @@
               <div class="space-y-2">
                 <label v-for="rating in [4, 3, 2]" :key="rating" class="flex items-center gap-2 cursor-pointer">
                   <input
+                      v-model="filters.minRating"
                       type="radio"
                       name="minRating"
                       :value="rating"
-                      v-model="filters.minRating"
                       class="text-primary-600 focus:ring-primary-500 w-4 h-4"
-                  />
+                  >
                   <div class="flex text-yellow-400">
                     <Icon v-for="n in 5" :key="n" :name="n <= rating ? 'heroicons:star-solid' : 'heroicons:star'" class="w-4 h-4" />
                   </div>
@@ -153,20 +153,20 @@
               <!-- Переключатель вида -->
               <div class="flex bg-gray-100 rounded-lg p-1" role="tablist" aria-label="Вид отображения">
                 <button
-                    @click="viewMode = 'grid'"
                     role="tab"
                     :aria-selected="viewMode === 'grid'"
                     :class="['p-2 rounded-md transition-all', viewMode === 'grid' ? 'bg-white shadow text-primary-600' : 'text-gray-400 hover:text-gray-600']"
                     title="Плитка"
+                    @click="viewMode = 'grid'"
                 >
                   <Icon name="heroicons:squares-2x2" class="w-5 h-5" />
                 </button>
                 <button
-                    @click="viewMode = 'list'"
                     role="tab"
                     :aria-selected="viewMode === 'list'"
                     :class="['p-2 rounded-md transition-all', viewMode === 'list' ? 'bg-white shadow text-primary-600' : 'text-gray-400 hover:text-gray-600']"
                     title="Список"
+                    @click="viewMode = 'list'"
                 >
                   <Icon name="heroicons:bars-3" class="w-5 h-5" />
                 </button>
@@ -182,13 +182,13 @@
                 class="inline-flex items-center gap-1 px-3 py-1 bg-primary-50 text-primary-700 rounded-full text-xs font-medium"
             >
               {{ cat }}
-              <button @click="removeCategoryFilter(cat)" class="hover:text-primary-900">
+              <button class="hover:text-primary-900" @click="removeCategoryFilter(cat)">
                 <Icon name="heroicons:x-mark" class="w-3.5 h-3.5" />
               </button>
             </span>
             <span v-if="filters.priceMin || filters.priceMax" class="inline-flex items-center gap-1 px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium">
               Цена: {{ filters.priceMin || '0' }} — {{ filters.priceMax || '∞' }} ₽
-              <button @click="filters.priceMin = null; filters.priceMax = null" class="hover:text-gray-900">
+              <button class="hover:text-gray-900" @click="filters.priceMin = null; filters.priceMax = null">
                 <Icon name="heroicons:x-mark" class="w-3.5 h-3.5" />
               </button>
             </span>
@@ -209,7 +209,7 @@
               <Icon name="heroicons:magnifying-glass" class="w-12 h-12 text-gray-300 mx-auto mb-4" />
               <h3 class="text-lg font-medium text-gray-900 mb-2">Товары не найдены</h3>
               <p class="text-gray-500 mb-4">Попробуйте изменить параметры фильтрации</p>
-              <button @click="resetFilters" class="text-primary-600 font-medium hover:underline">
+              <button class="text-primary-600 font-medium hover:underline" @click="resetFilters">
                 Сбросить все фильтры
               </button>
             </div>
@@ -219,10 +219,10 @@
           <div v-if="totalPages > 1" class="mt-10 flex justify-center">
             <nav class="flex items-center gap-2" aria-label="Пагинация">
               <button
-                  @click="currentPage--"
                   :disabled="currentPage === 1"
                   class="p-2.5 border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   aria-label="Предыдущая страница"
+                  @click="currentPage--"
               >
                 <Icon name="heroicons:chevron-left" class="w-5 h-5" />
               </button>
@@ -237,8 +237,8 @@
                 </button>
                 <button
                     v-else-if="page !== '...'"
-                    @click="currentPage = page as number"
                     class="w-10 h-10 border border-gray-200 rounded-lg hover:bg-gray-50 hover:border-gray-300 transition-colors"
+                    @click="currentPage = page as number"
                 >
                   {{ page }}
                 </button>
@@ -246,10 +246,10 @@
               </template>
 
               <button
-                  @click="currentPage++"
                   :disabled="currentPage === totalPages"
                   class="p-2.5 border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   aria-label="Следующая страница"
+                  @click="currentPage++"
               >
                 <Icon name="heroicons:chevron-right" class="w-5 h-5" />
               </button>

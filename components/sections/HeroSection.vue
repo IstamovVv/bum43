@@ -29,7 +29,7 @@
             </div>
           </div>
           <div class="flex flex-col sm:flex-row gap-4 pt-6">
-            <button @click="openCalculatorModal" class="bg-accent-500 hover:bg-accent-600 text-gray-900 px-8 py-4 rounded-lg font-bold text-lg shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1">
+            <button class="bg-accent-500 hover:bg-accent-600 text-gray-900 px-8 py-4 rounded-lg font-bold text-lg shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1" @click="openCalculatorModal">
               <span class="flex items-center justify-center gap-2">
                 <IconComponent name="calculator" color="#1a202c" class="w-6 h-6" />
                 <span>Рассчитать бесплатно</span>
@@ -62,7 +62,7 @@
           <h2 class="text-2xl font-bold text-primary-700 mb-2">Получить консультацию</h2>
           <p class="text-gray-500 mb-6 text-sm">Перезвоним в течение 15 минут</p>
 
-          <form @submit.prevent="submitForm" class="space-y-4">
+          <form class="space-y-4" @submit.prevent="submitForm">
             <div>
               <input
                   v-model="form.name"
@@ -87,7 +87,7 @@
                   rows="2"
                   placeholder="Комментарий (необязательно)"
                   class="w-full px-4 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all text-base resize-none"
-              ></textarea>
+              />
             </div>
 
             <button

@@ -71,9 +71,9 @@
             >
               <Slide v-for="(image, index) in galleryImages" :key="index">
                 <button
-                    @click="selectedImage = image"
                     class="w-full aspect-square rounded-xl overflow-hidden border-2 transition-all duration-200"
                     :class="selectedImage === image ? 'border-primary-600 ring-2 ring-primary-100' : 'border-gray-200 hover:border-gray-300'"
+                    @click="selectedImage = image"
                 >
                   <NuxtImg
                       :src="image"
@@ -192,10 +192,10 @@
             <!-- Счётчик -->
             <div class="flex items-center border border-gray-200 rounded-xl overflow-hidden bg-white">
               <button
-                  @click="decrementQuantity"
                   class="px-4 py-3 text-gray-600 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   :disabled="quantity <= 1"
                   type="button"
+                  @click="decrementQuantity"
               >
                 <Icon name="heroicons:minus" class="w-5 h-5" />
               </button>
@@ -205,12 +205,12 @@
                   min="1"
                   max="99"
                   class="w-14 text-center text-lg font-semibold text-gray-900 bg-transparent outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-              />
+              >
               <button
-                  @click="incrementQuantity"
                   class="px-4 py-3 text-gray-600 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   :disabled="quantity >= 99"
                   type="button"
+                  @click="incrementQuantity"
               >
                 <Icon name="heroicons:plus" class="w-5 h-5" />
               </button>
@@ -218,9 +218,9 @@
 
             <!-- В корзину -->
             <button
-                @click="addToCart"
                 :disabled="isAdding || product.stock === 0"
                 class="flex-1 bg-primary-600 hover:bg-primary-700 disabled:bg-gray-400 text-white py-3 px-6 rounded-xl font-bold transition-all duration-300 flex items-center justify-center gap-2 shadow-md hover:shadow-lg active:scale-[0.98]"
+                @click="addToCart"
             >
               <Icon v-if="!isAdding" name="heroicons:shopping-cart" class="w-5 h-5" />
               <Icon v-else name="heroicons:arrow-path" class="w-5 h-5 animate-spin" />
@@ -229,9 +229,9 @@
 
             <!-- В избранное -->
             <button
-                @click="toggleFavorite"
                 class="px-4 py-3 border border-gray-200 rounded-xl hover:border-red-300 hover:bg-red-50 transition-all"
                 :class="{ 'text-red-600 border-red-300 bg-red-50': isFavorite }"
+                @click="toggleFavorite"
             >
               <Icon :name="isFavorite ? 'heroicons:heart-solid' : 'heroicons:heart'" class="w-6 h-6" />
             </button>
@@ -264,12 +264,12 @@
             <button
                 v-for="tab in tabs"
                 :key="tab.id"
-                @click="activeTab = tab.id"
                 class="px-6 py-4 text-sm font-medium transition-colors relative"
                 :class="activeTab === tab.id ? 'text-primary-600' : 'text-gray-500 hover:text-gray-700'"
+                @click="activeTab = tab.id"
             >
               {{ tab.label }}
-              <span v-if="activeTab === tab.id" class="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-600"></span>
+              <span v-if="activeTab === tab.id" class="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-600"/>
             </button>
           </nav>
         </div>
@@ -333,7 +333,7 @@
           :visible="lightboxVisible"
           :imgs="galleryImages"
           :index="lightboxIndex"
-          :scrollDisabled="false"
+          :scroll-disabled="false"
           @hide="lightboxVisible = false"
           @move="handleLightboxMove"
       />
@@ -457,7 +457,6 @@ const quantity = ref(1)
 const isAdding = ref(false)
 const isFavorite = ref(false)
 const activeTab = ref('description')
-const categorySlug = computed(() => product.value.categorySlug || product.value.category.toLowerCase().replace(/\s+/g, '-'))
 
 // === Lightbox состояние ===
 const lightboxVisible = ref(false)

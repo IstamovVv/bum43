@@ -40,7 +40,7 @@
         </div>
         <div class="bg-gray-50 rounded-xl p-6">
           <h3 class="text-2xl font-bold text-gray-900 mb-6">Отправить сообщение</h3>
-          <form @submit.prevent="submitForm" class="space-y-4">
+          <form class="space-y-4" @submit.prevent="submitForm">
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Ваше имя *</label>
               <input v-model="form.name" type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">

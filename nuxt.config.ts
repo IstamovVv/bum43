@@ -24,7 +24,8 @@ export default defineNuxtConfig({
     'nuxt-security',
     'vue3-carousel-nuxt',
     'nuxt-easy-lightbox',
-    '@nuxt/content'
+    '@nuxt/eslint',
   ],
     experimental: { appManifest: false },
+    ogImage: false,
 })

@@ -1,15 +1,17 @@
 <template>
-  <main>
-    <HeroSection />
-    <BrandsSection />
-    <CatalogSection/>
-    <AdvantagesSection />
-    <ReviewsSection />
-    <ContactsSection />
-  </main>
+  <div>
+    <main>
+      <HeroSection />
+      <BrandsSection />
+      <CatalogSection/>
+      <AdvantagesSection />
+      <ReviewsSection />
+      <ContactsSection />
+    </main>
 
-  <CallbackModal />
-  <CalculatorModal />
+    <CallbackModal />
+    <CalculatorModal />
+  </div>
 </template>
 
 <script setup>

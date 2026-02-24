@@ -5,9 +5,9 @@
         <div class="bg-white rounded-xl max-w-md w-full p-6" @click.stop>
           <div class="flex justify-between items-center mb-4">
             <h3 class="text-2xl font-bold text-gray-900">Быстрый расчет</h3>
-            <button @click="close" class="text-gray-400 hover:text-gray-600">✕</button>
+            <button class="text-gray-400 hover:text-gray-600" @click="close">✕</button>
           </div>
-          <form @submit.prevent="submit" class="space-y-4">
+          <form class="space-y-4" @submit.prevent="submit">
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Ваше имя *</label>
               <input v-model="form.name" type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500" required>

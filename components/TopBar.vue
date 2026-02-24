@@ -21,7 +21,7 @@
             <IconWhatsapp class="w-4 h-4" />
             <span>WhatsApp</span>
           </a>
-          <button @click="openCallbackModal" class="bg-accent-500 hover:bg-accent-600 px-4 py-1.5 rounded-md font-medium transition-colors">
+          <button class="bg-accent-500 hover:bg-accent-600 px-4 py-1.5 rounded-md font-medium transition-colors" @click="openCallbackModal">
             Заказать звонок
           </button>
         </div>

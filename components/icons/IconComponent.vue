@@ -1,5 +1,5 @@
 <template>
-  <span class="icon" :class="`i-${name}`" :style="iconStyle"></span>
+  <span class="icon" :class="`i-${name}`" :style="iconStyle"/>
 </template>
 
 <script setup>
