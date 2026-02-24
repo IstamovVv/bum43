@@ -10,10 +10,12 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxt/content": "^3.11.2",
     "@nuxt/fonts": "0.14.0",
     "@nuxt/image": "2.0.0",
     "@nuxtjs/seo": "3.4.0",
     "@nuxtjs/tailwindcss": "6.14.0",
+    "better-sqlite3": "^12.6.2",
     "nuxt": "^3.21.1",
     "nuxt-easy-lightbox": "1.1.0",
     "nuxt-security": "2.5.1",
@@ -23,5 +25,11 @@
   },
   "devDependencies": {
     "nuxt-icon": "1.0.0-beta.7"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "better-sqlite3",
+      "sqlite3"
+    ]
   }
 }

@@ -19,6 +19,8 @@ export default defineNuxtConfig({
     'nuxt-icon',
     'nuxt-security',
     'vue3-carousel-nuxt',
-    'nuxt-easy-lightbox'
+    'nuxt-easy-lightbox',
+    '@nuxt/content'
   ],
+    experimental: { appManifest: false },
 })
