@@ -1,26 +1,56 @@
-<!doctype html>
-<html lang="ru">
+<!DOCTYPE html>
+<html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="robots" content="noindex, nofollow" />
-    <title>Админка — СтройБум Киров</title>
-    <link rel="icon" type="image/png" href="/favicon.png" />
-
+    <title>CMS — My Shop</title>
     <!-- Подключаем Decap CMS -->
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-
-    <!-- Кастомные стили -->
-    <style>
-        :root {
-            --primary-color: #f97316;
-        }
-        .decap-cms-branding {
-            background-color: var(--primary-color) !important;
-        }
-    </style>
 </head>
 <body>
-<!-- Decap загрузится автоматически -->
+<script>
+    window.CMS_MANUAL_INIT = true;
+</script>
+<script>
+    window.onload = function() {
+        CMS.init({
+            config: {
+                backend: {
+                    name: 'github',
+                    repo: 'ваш-username/my-shop',
+                    branch: 'main'
+                },
+                media_folder: 'public/images/uploads',
+                public_folder: '/my-shop/images/uploads',
+                collections: [
+                    {
+                        name: "categories",
+                        label: "Категории",
+                        folder: "content/categories",
+                        create: true,
+                        fields: [
+                            { label: "Название", name: "title", widget: "string" },
+                            { label: "Слаг", name: "slug", widget: "string" },
+                            { label: "Описание", name: "description", widget: "text" }
+                        ]
+                    },
+                    {
+                        name: "products",
+                        label: "Товары",
+                        folder: "content/products",
+                        create: true,
+                        fields: [
+                            { label: "Название", name: "title", widget: "string" },
+                            { label: "Категория", name: "category", widget: "relation", collection: "categories", searchFields: ["title"], valueField: "slug" },
+                            { label: "Цена", name: "price", widget: "number" },
+                            { label: "Изображение", name: "image", widget: "image" },
+                            { label: "Описание", name: "body", widget: "markdown" }
+                        ]
+                    }
+                ]
+            }
+        });
+    };
+</script>
 </body>
 </html>

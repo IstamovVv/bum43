@@ -2,65 +2,32 @@ backend:
   name: github
   repo: IstamovVv/bum43
   branch: main
-  squash_merges: true
+  client_id: Ov23liDhelZ1lDAWzp2Q
 
-locale: ru
+# Папка для загружаемых изображений
+media_folder: "public/images/uploads"
+# Путь к картинкам на сайте (с учётом baseURL)
+public_folder: "/bum43/images/uploads"
 
-media_folder: public/images/cms
-public_folder: /images/cms
-
+# Коллекция: Категории
 collections:
-  # === ТОВАРЫ ===
-  - name: products
-    label: 📦 Товары
-    label_singular: Товар
-    folder: data/products
+  - name: "categories"
+    label: "Категории"
+    folder: "content/categories"
     create: true
-    slug: '{{slug}}'
-    delete: true
-    editor:
-      preview: false
     fields:
-      - { label: 'ID (уникальный)', name: 'id', widget: 'number', value_type: 'int' }
-      - { label: 'Название', name: 'name', widget: 'string' }
-      - { label: 'Описание', name: 'desc', widget: 'text' }
-      - { label: 'Цена (₽)', name: 'price', widget: 'number', value_type: 'int' }
-      - { label: 'Старая цена (₽)', name: 'oldPrice', widget: 'number', value_type: 'int', required: false }
-      - { label: 'Категория', name: 'category', widget: 'string' }
-      - { label: 'Изображение', name: 'image', widget: 'image', required: false }
-      - { label: 'Популярный', name: 'isPopular', widget: 'boolean', default: false }
-      - { label: 'Новинка', name: 'isNew', widget: 'boolean', default: false }
-      - { label: 'Остаток (шт)', name: 'stock', widget: 'number', value_type: 'int', default: 0 }
-      - { label: 'Рейтинг', name: 'rating', widget: 'number', value_type: 'float', default: 5.0, min: 1, max: 5 }
-      - { label: 'Отзывы (кол-во)', name: 'reviewCount', widget: 'number', value_type: 'int', default: 0 }
-      - { label: 'Дата создания', name: 'createdAt', widget: 'datetime', format: 'YYYY-MM-DD' }
+      - { label: "Название", name: "title", widget: "string" }
+      - { label: "Слаг (URL)", name: "slug", widget: "string" }
+      - { label: "Описание", name: "description", widget: "text" }
 
-  # === КАТЕГОРИИ ===
-  - name: categories
-    label: 📂 Категории
-    label_singular: Категория
-    folder: data/categories
+  # Коллекция: Товары
+  - name: "products"
+    label: "Товары"
+    folder: "content/products"
     create: true
-    slug: '{{slug}}'
-    delete: true
     fields:
-      - { label: 'Название', name: 'name', widget: 'string' }
-      - { label: 'Slug (URL)', name: 'slug', widget: 'string' }
-      - { label: 'Изображение', name: 'image', widget: 'image' }
-      - { label: 'Описание', name: 'description', widget: 'text', required: false }
-
-  # === БРЕНДЫ ===
-  - name: brands
-    label: 🏭 Бренды
-    label_singular: Бренд
-    folder: data/brands
-    create: true
-    slug: '{{slug}}'
-    delete: true
-    fields:
-      - { label: 'Название', name: 'title', widget: 'string' }
-      - { label: 'Slug (URL)', name: 'slug', widget: 'string' }
-      - { label: 'Страна', name: 'country', widget: 'string' }
-      - { label: 'Флаг (эмодзи)', name: 'countryFlag', widget: 'string', default: '🇷🇺' }
-      - { label: 'Логотип', name: 'logo', widget: 'image', required: false }
-      - { label: 'Популярный', name: 'isPopular', widget: 'boolean', default: false }
+      - { label: "Название товара", name: "title", widget: "string" }
+      - { label: "Категория", name: "category", widget: "relation", collection: "categories", searchFields: ["title"], valueField: "slug" }
+      - { label: "Цена", name: "price", widget: "number" }
+      - { label: "Изображение", name: "image", widget: "image" }
+      - { label: "Описание", name: "body", widget: "markdown" }
