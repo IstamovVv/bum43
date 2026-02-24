@@ -15,7 +15,6 @@
     "@nuxt/image": "2.0.0",
     "@nuxtjs/seo": "3.4.0",
     "@nuxtjs/tailwindcss": "6.14.0",
-    "better-sqlite3": "^12.6.2",
     "nuxt": "^3.21.1",
     "nuxt-easy-lightbox": "1.1.0",
     "nuxt-security": "2.5.1",
